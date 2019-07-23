@@ -1,0 +1,11 @@
+cmd下运行：
+1.cd到目标文件夹
+2.#建立虚拟环境
+pipenv install
+3.#进入虚拟环境（上一步可省略,因为没有虚拟环境的话会自动建立一个）
+pipenv shell
+4.#打包的模块也要安装
+pip install pyinstaller
+5.安装py中导入的其他包
+6.#开始打包
+pyinstaller -F E:\test\url_crawler.py

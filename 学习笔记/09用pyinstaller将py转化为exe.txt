@@ -1,0 +1,7 @@
+用pyinstaller将py转化为exe
+
+
+1.打开cmd，cd到py文件所在的文件夹。注意跨盘时，先用D:命令
+2.这个命令直接在cmd窗口中使用：
+pyinstall --onefile aaa.py
+3.输出的exe在dist文件夹中
