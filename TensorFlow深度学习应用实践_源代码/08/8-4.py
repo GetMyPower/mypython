@@ -17,11 +17,11 @@ outputY = inputX * 4 + 1 + noise
 weight1 = tf.Variable(np.random.rand(inputX.shape[1],4))
 bias1 = tf.Variable(np.random.rand(inputX.shape[1],4))
 x1 = tf.placeholder(tf.float64, [None, 1])
-y1_ = tf.matmul(x1, weight1) + bias1
+y1_ = tf.matmul(x1, weight1) + bias1  # 1st层输出值
 #这里是第二层
-weight2 = tf.Variable(np.random.rand(4,1))
-bias2 = tf.Variable(np.random.rand(inputX.shape[1],1))
-y2_ = tf.matmul(y1_, weight2) + bias2
+weight2 = tf.Variable(np.random.rand(4,1))  # 4行1列
+bias2 = tf.Variable(np.random.rand(inputX.shape[1],1))  # 1行1列
+y2_ = tf.matmul(y1_, weight2) + bias2  # 2nd层输出值
 
 y = tf.placeholder(tf.float64, [None, 1])
 
@@ -35,12 +35,13 @@ sess.run(init)
 for i in range(1000):
     sess.run(train, feed_dict={x1: inputX, y: outputY})
 
+print("weight1:")
 print(weight1.eval(sess))
-print("---------------------")
-print(weight2.eval(sess))
-print("---------------------")
+print("bias1:")
 print(bias1.eval(sess))
-print("---------------------")
+print("weight2:")
+print(weight2.eval(sess))
+print("bias2:")
 print(bias2.eval(sess))
 print("------------------结果是------------------")
 
