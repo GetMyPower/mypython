@@ -31,5 +31,5 @@ ax.text(4+margin,0+margin, r"x",fontsize=20)
 plt.xticks(np.arange(-2,3))
 plt.yticks(np.arange(-2,3))
 
-ax.axis('equal')
+ax.axis('equal')  # 表示x轴和y轴的单位长度相同
 plt.show()
