@@ -1,4 +1,5 @@
 参考资料https://www.zhihu.com/question/27239198?rf=24827633  
+http://galaxy.agh.edu.pl/~vlsi/AI/backp_t_en/backprop.html  
 ## 1 关于多层神经网络
 
 ![多层神经网络表示](https://pic4.zhimg.com/80/808254232cd4983cac374c5cc2a1fc87_hd.jpg)多层神经网络表示  
