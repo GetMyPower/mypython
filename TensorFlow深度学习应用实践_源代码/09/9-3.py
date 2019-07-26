@@ -28,10 +28,10 @@ def sigmoid(x):
     return 1.0 / (1.0 + math.exp(-x))
 
 
-# 激活函数的导数，f'(x)
+# 激活函数的导数，f'(x)。注意这里，sigmod_derivate()被调用时传入参数是sigmoid(x)
 def sigmod_derivate(x):
-    return sigmoid(x) * (1 - sigmoid(x))
-
+    # return sigmoid(x) * (1 - sigmoid(x))
+    return x * (1 - x)
 
 # endregion
 
