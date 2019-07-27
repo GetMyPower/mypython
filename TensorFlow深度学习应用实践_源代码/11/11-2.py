@@ -1,3 +1,10 @@
+"""
+假设y=f(x)=0.3*x+0.15表达式未知，只知道是线性函数，
+给定一组训练数据x_data和y_data，使神经网络拟合模型y_model = weight * x_data + bias，
+计算weight和bias，并绘制拟合后的图线。
+对比程序11-1.py，当x_data数据量较大时，
+网络参数无法收敛，这是应当改变训练参数为一个一个输入
+"""
 import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
