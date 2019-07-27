@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 threshold = 1.0e-2
 x1_data = np.random.randn(100).astype(np.float32)
