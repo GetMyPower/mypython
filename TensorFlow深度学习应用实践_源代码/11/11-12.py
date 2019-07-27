@@ -1,3 +1,7 @@
+"""
+loss太大，神经网络不收敛，无法计算
+"""
+
 import tensorflow as tf
 import numpy as np
 
