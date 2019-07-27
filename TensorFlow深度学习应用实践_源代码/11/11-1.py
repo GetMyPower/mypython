@@ -1,3 +1,9 @@
+"""
+假设y=f(x)=0.3*x+0.15表达式未知，只知道是线性函数，
+给定一组训练数据x_data和y_data，
+使神经网络拟合模型y_model = weight * x_data + bias，
+计算weight和bias，并绘制拟合后的图线
+"""
 import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
