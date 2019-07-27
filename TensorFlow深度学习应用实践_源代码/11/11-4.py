@@ -1,3 +1,8 @@
+"""
+多元线性回归
+相比课本内容，这里改正了不能运行的错误（迭代的loss判据），改进x_data为连续数据，
+以及3D图像优化
+"""
 import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
