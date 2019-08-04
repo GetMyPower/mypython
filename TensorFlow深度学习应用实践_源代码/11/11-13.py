@@ -17,7 +17,7 @@ weights_ = tf.Variable(np.ones([2,1]),dtype=tf.float32)
 y_model = tf.matmul(x_data_,weights_)
 
 loss = tf.reduce_mean(tf.pow((y_model - y_data),2))
-train_op = tf.train.GradientDescentOptimizer(0.01).minimize(loss)
+train_op = tf.train.GradientDescentOptimizer(0.00001).minimize(loss)
 
 sess = tf.Session()
 init = tf.initialize_all_variables()
