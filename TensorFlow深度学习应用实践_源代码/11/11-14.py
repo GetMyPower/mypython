@@ -1,3 +1,8 @@
+"""
+2019-08-04 20:52:45
+csv读入部分不能用，暂时还不能理解，程序未能执行
+"""
+
 import tensorflow as tf
 import numpy as np
 import Test
