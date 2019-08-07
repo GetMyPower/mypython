@@ -5,6 +5,8 @@
 import numpy as np
 from pylab import *
 from scipy import stats
+import matplotlib
+import matplotlib.pyplot as plt
 # 设置matplotlib正常显示中文和负号
 matplotlib.rcParams['font.sans-serif'] = ['SimHei']  # 用黑体显示中文
 matplotlib.rcParams['axes.unicode_minus'] = False  # 正常显示负号
