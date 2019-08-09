@@ -25,7 +25,7 @@ def get_smooth_quadratic(x,y,N):
     return xx,f(xx)
 # endregion
 
-figure(1)
+plt.figure(1)
 N=100    # 平滑处理后点数
 xx,yy=get_smooth_quadratic(x,y,N)
 plt.xticks(np.arange(0,500,60))
@@ -35,7 +35,7 @@ plt.plot(xx,yy)
 
 
 # 各种插值方式的展示
-figure(2)
+plt.figure(2)
 NN = 500
 x = np.arange(0, NN, 1)
 y = 5 * np.sin(x / 50) + np.random.normal(0, 0.1, NN)
