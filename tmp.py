@@ -5,7 +5,7 @@ import numpy as np
 import tensorflow as tf
 tf.enable_eager_execution()
 
-# region 1.Êı¾İÔØÈë
+# region 
 class MNISTLoader():
     def __init__(self):
         mnist = tf.keras.datasets.mnist
@@ -23,7 +23,7 @@ class MNISTLoader():
 
 # endregion
 
-# region 2.½¨Á¢Ä£ĞÍ
+# region 
 class CNN(tf.keras.Model):
     def __init__(self):
         super().__init__()
@@ -65,16 +65,16 @@ class CNN(tf.keras.Model):
 
 # endregion
 
-# region 3.ÑµÁ·Ä£ĞÍ
-num_epochs=5   # ÑµÁ·¹ı³Ì»áÊ¹Ã¿¸öbatchÊ¹ÓÃnum_epochs´Î
-bat_size=50   # Ã¿¸öbatchµÄ´óĞ¡
+# region 
+num_epochs=5   # è®­ç»ƒè¿‡ç¨‹ä¼šä½¿æ¯ä¸ªbatchä½¿ç”¨num_epochsæ¬¡
+bat_size=50   # æ¯ä¸ªbatchçš„å¤§å°
 learning_rate=0.001
 
 model=CNN()
 data_loader=MNISTLoader()
 optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate)
 
-num_batches=int(data_loader.num_train_data//bat_size*num_epochs)   # Ò»¹²ÓĞnum_batches¸öÔÊĞíÖØ¸´µÄbatch·ÅÈëÄ£ĞÍÑµÁ·
+num_batches=int(data_loader.num_train_data//bat_size*num_epochs)   # ä¸€å…±æœ‰num_batchesä¸ªå…è®¸é‡å¤çš„batchæ”¾å…¥æ¨¡å‹è®­ç»ƒ
 for batch_index in range(num_batches):
     X,y=data_loader.get_batch(bat_size)
     with tf.GradientTape() as tape:
@@ -89,7 +89,7 @@ for batch_index in range(num_batches):
 
 # endregion
 
-# region 4.Ä£ĞÍ¾«¶È
+# region 
 sparse_categorical_accuracy=tf.keras.metrics.SparseCategoricalAccuracy()
 num_batches=int(data_loader.num_test_data//bat_size)
 for batch_index in range(num_batches):
