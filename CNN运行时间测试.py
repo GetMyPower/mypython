@@ -68,7 +68,7 @@ class CNN(tf.keras.Model):
 
 # region 
 num_epochs=5   # 训练过程会使每个batch使用num_epochs次
-bat_size=50   # 每个batch的大小
+bat_size=int(50*1)   # 每个batch的大小
 learning_rate=0.001
 
 model=CNN()
