@@ -1,3 +1,4 @@
+# coding=gbk
 import time
 
 start = time.clock()
