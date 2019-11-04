@@ -1,13 +1,11 @@
 # coding=gbk
 """"
-Ò»¸öÊ¶±ğMNISTµÄ¼òµ¥MLPÄ£ĞÍ£¬²¢½áºÏcheckpoint´æÈ¡MLPÄ£ĞÍ£¬
-Ê¹ÓÃtensorboard¶ÔÑµÁ·¹ı³Ì¿ÉÊÓ»¯¡£
-¿ÉÊÓ»¯ÒªÔÚÃüÁîĞĞÖĞÖ´ĞĞtensorboard --logdir=./tensorboard²¢´ò¿ªÏàÓ¦ÍøÒ³
-TensorFlow Ìá¹©ÁË tf.train.Checkpoint ÕâÒ»Ç¿´óµÄ±äÁ¿±£´æÓë»Ö¸´Àà£¬
-¿ÉÒÔÊ¹ÓÃÆä save() ºÍ restore() ·½·¨
-½« TensorFlow ÖĞËùÓĞ°üº¬ Checkpointable State µÄ¶ÔÏó½øĞĞ±£´æºÍ»Ö¸´¡£
-¾ßÌå¶øÑÔ£¬tf.keras.optimizer ¡¢ tf.Variable ¡¢ tf.keras.Layer
-»òÕß tf.keras.Model ÊµÀı¶¼¿ÉÒÔ±»±£´æ¡£
+ä¸€ä¸ªè¯†åˆ«MNISTçš„ç®€å•MLPæ¨¡å‹ï¼Œå¹¶ç»“åˆcheckpointå­˜å–MLPæ¨¡å‹ï¼Œ
+ä½¿ç”¨tensorboardå¯¹è®­ç»ƒè¿‡ç¨‹å¯è§†åŒ–ã€‚
+å¯è§†åŒ–è¦åœ¨å‘½ä»¤è¡Œä¸­æ‰§è¡Œtensorboard --logdir=./tensorboardå¹¶æ‰“å¼€ç›¸åº”ç½‘é¡µï¼Œ
+1.å¦‚æœéœ€è¦é‡æ–°è®­ç»ƒï¼Œéœ€è¦åˆ é™¤æ‰è®°å½•æ–‡ä»¶å¤¹å†…çš„ä¿¡æ¯å¹¶é‡å¯ TensorBoard
+ï¼ˆæˆ–è€…å»ºç«‹ä¸€ä¸ªæ–°çš„è®°å½•æ–‡ä»¶å¤¹å¹¶å¼€å¯ TensorBoardï¼Œ --logdir å‚æ•°è®¾ç½®ä¸ºæ–°å»ºç«‹çš„æ–‡ä»¶å¤¹ï¼‰ï¼›
+2.è®°å½•æ–‡ä»¶å¤¹ç›®å½•ä¿æŒå…¨è‹±æ–‡ã€‚
 """
 import time
 
@@ -17,12 +15,12 @@ import numpy as np
 import argparse
 
 
-# region 1.Êı¾İÔØÈë
+# region 1.æ•°æ®è½½å…¥
 class MNISTLoader():
     def __init__(self):
         mnist = tf.keras.datasets.mnist
         (self.train_data, self.train_label), (self.test_data, self.test_label) = mnist.load_data()
-        # MNISTÖĞµÄÍ¼ÏñÄ¬ÈÏÎªuint8£¨0-255µÄÊı×Ö£©¡£ÒÔÏÂ´úÂë½«Æä¹éÒ»»¯µ½0-1Ö®¼äµÄ¸¡µãÊı£¬²¢ÔÚ×îºóÔö¼ÓÒ»Î¬×÷ÎªÑÕÉ«Í¨µÀ
+        # MNISTä¸­çš„å›¾åƒé»˜è®¤ä¸ºuint8ï¼ˆ0-255çš„æ•°å­—ï¼‰ã€‚ä»¥ä¸‹ä»£ç å°†å…¶å½’ä¸€åŒ–åˆ°0-1ä¹‹é—´çš„æµ®ç‚¹æ•°ï¼Œå¹¶åœ¨æœ€åå¢åŠ ä¸€ç»´ä½œä¸ºé¢œè‰²é€šé“
         self.train_data = np.expand_dims(self.train_data.astype(np.float32) / 255.0, axis=-1)  # [60000, 28, 28, 1]
         self.test_data = np.expand_dims(self.test_data.astype(np.float32) / 255.0, axis=-1)  # [10000, 28, 28, 1]
         self.train_label = self.train_label.astype(np.int32)  # [60000]
@@ -30,18 +28,18 @@ class MNISTLoader():
         self.num_train_data, self.num_test_data = self.train_data.shape[0], self.test_data.shape[0]
 
     def get_batch(self, batch_size):
-        # ´ÓÊı¾İ¼¯ÖĞËæ»úÈ¡³öbatch_size¸öÔªËØ²¢·µ»Ø
+        # ä»æ•°æ®é›†ä¸­éšæœºå–å‡ºbatch_sizeä¸ªå…ƒç´ å¹¶è¿”å›
         index = np.random.randint(0, np.shape(self.train_data)[0], batch_size)
         return self.train_data[index, :], self.train_label[index]
 
 
 # endregion
 
-# region 2.½¨Á¢MLPÄ£ĞÍ
+# region 2.å»ºç«‹MLPæ¨¡å‹
 class MLP(tf.keras.Model):
     def __init__(self):
         super().__init__()
-        self.flatten = tf.keras.layers.Flatten()  # Flatten²ã½«³ıµÚÒ»Î¬£¨batch_size£©ÒÔÍâµÄÎ¬¶ÈÕ¹Æ½
+        self.flatten = tf.keras.layers.Flatten()  # Flattenå±‚å°†é™¤ç¬¬ä¸€ç»´ï¼ˆbatch_sizeï¼‰ä»¥å¤–çš„ç»´åº¦å±•å¹³
         self.dense1 = tf.keras.layers.Dense(units=100, activation=tf.nn.relu)
         self.dense2 = tf.keras.layers.Dense(units=10)
 
@@ -55,7 +53,7 @@ class MLP(tf.keras.Model):
 
 # endregion
 
-# region 3.ÃüÁîĞĞ²ÎÊı
+# region 3.å‘½ä»¤è¡Œå‚æ•°
 parse = argparse.ArgumentParser(description='process some integers')
 parse.add_argument('--mode', default='train', help='train or test')
 parse.add_argument('--num_epochs', default=1)
@@ -67,15 +65,15 @@ data_loader = MNISTLoader()
 
 # endregion
 
-# region 4.ÑµÁ·Ä£ĞÍ
+# region 4.è®­ç»ƒæ¨¡å‹
 def train():
     model = MLP()
     optimizer = tf.keras.optimizers.Adam(learning_rate=args.learning_rate)
     num_batches = int(data_loader.num_train_data // args.batch_size * args.num_epochs)
     checkpoint = tf.train.Checkpoint(myAwesomeModel=model)
     manager = tf.train.CheckpointManager(checkpoint, directory='./save',
-                                         max_to_keep=3)  # Ê¹ÓÃtf.train.CheckpointManager¹ÜÀíCheckpoint
-    summary_writer = tf.summary.create_file_writer('./tensorboard')   #ÊµÀı»¯¼ÇÂ¼Æ÷
+                                         max_to_keep=3)  # ä½¿ç”¨tf.train.CheckpointManagerç®¡ç†Checkpoint
+    summary_writer = tf.summary.create_file_writer('./tensorboard')   #å®ä¾‹åŒ–è®°å½•å™¨
     for batch_index in range(1, num_batches + 1):
         X, y = data_loader.get_batch(args.batch_size)
         with tf.GradientTape() as tape:
@@ -85,21 +83,21 @@ def train():
             if batch_index % 100 == 0:
                 print("batch %d: loss %f" % (batch_index, loss.numpy()))
 
-            with summary_writer.as_default():  # Ö¸¶¨¼ÇÂ¼Æ÷
-                tf.summary.scalar("loss", loss, step=batch_index)  # ½«µ±Ç°ËğÊ§º¯ÊıµÄÖµĞ´Èë¼ÇÂ¼Æ÷
+            with summary_writer.as_default():  # æŒ‡å®šè®°å½•å™¨
+                tf.summary.scalar("loss", loss, step=batch_index)  # å°†å½“å‰æŸå¤±å‡½æ•°çš„å€¼å†™å…¥è®°å½•å™¨
                 
 
         grads = tape.gradient(loss, model.variables)
         optimizer.apply_gradients(zip(grads, model.variables))
         if batch_index % 200 == 0:
-            # path = checkpoint.save('./save/model.ckpt')  # (1)ÕâÊÇÓÃcheckpointÖ±½Ó±£´æÄ£ĞÍµÄ·½Ê½
-            path = manager.save(checkpoint_number=batch_index)  # (2)ÕâÀïÓÃcheckpoint_manager±£´æÄ£ĞÍ²¢±àºÅ
+            # path = checkpoint.save('./save/model.ckpt')  # (1)è¿™æ˜¯ç”¨checkpointç›´æ¥ä¿å­˜æ¨¡å‹çš„æ–¹å¼
+            path = manager.save(checkpoint_number=batch_index)  # (2)è¿™é‡Œç”¨checkpoint_managerä¿å­˜æ¨¡å‹å¹¶ç¼–å·
             print("model saved to %s" % path)
 
 
 # endregion
 
-# region 5.²âÊÔÄ£ĞÍ
+# region 5.æµ‹è¯•æ¨¡å‹
 def test():
     model_to_be_restored = MLP()
     checkpoint = tf.train.Checkpoint(myAwesomeModel=model_to_be_restored)
@@ -117,7 +115,7 @@ if __name__ == '__main__':
         test()
 
 end = time.clock()
-print("\nÔËĞĞÊ±³¤ %.3f Seconds" % (end - start))
+print("\nè¿è¡Œæ—¶é•¿ %.3f Seconds" % (end - start))
 
 # region
 
