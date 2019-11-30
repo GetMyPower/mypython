@@ -32,22 +32,35 @@ result = Counter(a)
 ```
 
 6.	从列表 [True, 1, 0, 'x', None, 'x', False, 2, True] 中删除元素‘x’。
-```
+```python
 a = [True, 1, 0, 'x', None, 'x', False, 2, True]
 a = [x for x in a if x != 'x']
 ```
 
 7.	从列表 [True, 1, 0, 'x', None, 'x', False, 2, True] 中删除索引号为4的元素。
-```
+```python
 a = [True, 1, 0, 'x', None, 'x', False, 2, True]
 a.pop(4)
 ```
 
 8.	删除列表中索引号为奇数（或偶数）的元素。
+```python
+a = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+print(a[::2])  # 此为索引号为偶数的元素，即删除索引号为奇数的元素
+print(a[1::2])  # 此为索引号为奇数的元素，即删除索引号为偶数的元素
+```
 
 9.	清空列表中的所有元素。
+```python
+a.clear()
+```
 
 10.	对列表 [3,0,8,5,7] 分别做升序和降序排列。
+````python
+a = [3, 0, 8, 5, 7]
+a_ascending = sorted(a)  # 升序
+a_descending = sorted(a, reverse=True)  # 降序
+```
 
 11.	将列表 [3,0,8,5,7] 中大于 5 元素置为1，其余元素置为0。
 
