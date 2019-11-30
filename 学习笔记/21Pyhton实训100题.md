@@ -12,14 +12,36 @@ a.insert(0,7)
 a.insert(-1,0)
 ```
 3.	反转列表 [0,1,2,3,4,5,6,7] 。
+```python
+a = [0,1,2,3,4,5,6,7]
+a.reverse()
+```
 
 4.	反转列表 [0,1,2,3,4,5,6,7] 后给出中元素 5 的索引号。
+```python
+a = [0,1,2,3,4,5,6,7]
+a.reverse()
+a.index(5)
+```
 
 5.	分别统计列表 [True,False,0,1,2] 中 True,False,0,1,2的元素个数，发现了什么？
+```python
+from collections import Counter
+a = [True, False, 0, 1, 2]
+result = Counter(a)
+```
 
-6.	从列表 [True,1,0,‘x’,None,‘x’,False,2,True] 中删除元素‘x’。
+6.	从列表 [True, 1, 0, 'x', None, 'x', False, 2, True] 中删除元素‘x’。
+```
+a = [True, 1, 0, 'x', None, 'x', False, 2, True]
+a = [x for x in a if x != 'x']
+```
 
-7.	从列表 [True,1,0,‘x’,None,‘x’,False,2,True] 中删除索引号为4的元素。
+7.	从列表 [True, 1, 0, 'x', None, 'x', False, 2, True] 中删除索引号为4的元素。
+```
+a = [True, 1, 0, 'x', None, 'x', False, 2, True]
+a.pop(4)
+```
 
 8.	删除列表中索引号为奇数（或偶数）的元素。
 
